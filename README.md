@@ -1,64 +1,99 @@
-![](./resources/official_armmbed_example_badge.png)
-# Blinky Mbed OS example
+# CSE211s Final Project - Embedded System with RTC and Voltage Display
 
-The example project is part of the [Arm Mbed OS Official Examples](https://os.mbed.com/code/) and is the [getting started example for Mbed OS](https://os.mbed.com/docs/mbed-os/v5.14/quick-start/index.html). It contains an application that repeatedly blinks an LED on supported [Mbed boards](https://os.mbed.com/platforms/).
+This project was developed for the **CSE211s - Introduction to Embedded Systems** course at **Ain Shams University**, Spring 2025.  
+It demonstrates an embedded application running on an STM32 NUCLEO-F401RE board using **Mbed OS**, interfaced with an Arduino multifunction shield.
 
-You can build the project with all supported [Mbed OS build tools](https://os.mbed.com/docs/mbed-os/latest/tools/index.html). However, this example project specifically refers to the command-line interface tool [Arm Mbed CLI](https://github.com/ARMmbed/mbed-cli#installing-mbed-cli).
-(Note: To see a rendered example you can import into the Arm Online Compiler, please see our [import quick start](https://os.mbed.com/docs/mbed-os/latest/quick-start/online-with-the-online-compiler.html#importing-the-code).)
+---
 
-1. [Install Mbed CLI](https://os.mbed.com/docs/mbed-os/latest/quick-start/offline-with-mbed-cli.html).
+## 📌 Features
 
-1. Clone this repository on your system, and change the current directory to where the project was cloned:
+- **Real-Time Clock (RTC)**  
+  - Displays elapsed time in `MMSS` format on a 4-digit 7-segment display.  
+  - Starts from 00:00 at power-up and increments every second.  
+  - Pressing **S1** resets the timer to zero.
 
-    ```bash
-    $ git clone git@github.com:armmbed/mbed-os-example-blinky && cd mbed-os-example-blinky
-    ```
+- **Analog Voltage Display**  
+  - Reads voltage from a potentiometer using the on-board ADC.  
+  - Pressing **S3** shows the voltage on the display in `X.XX` format.  
+  - Tracks and stores the minimum and maximum observed voltages.
 
-    Alternatively, you can download the example project with Arm Mbed CLI using the `import` subcommand:
+---
 
-    ```bash
-    $ mbed import mbed-os-example-blinky && cd mbed-os-example-blinky
-    ```
+## 🛠️ Hardware Requirements
 
+- STM32 NUCLEO-F401RE Board  
+- Arduino Multifunction Shield  
+- USB cable  
+- Optional: oscilloscope or multimeter for voltage measurement
 
-## Application functionality
+---
 
-The `main()` function is the single thread in the application. It toggles the state of a digital output connected to an LED on the board.
+## 📂 Project Structure
 
-## Building and running
+- `main.cpp` – Core logic: timekeeping, voltage reading, 7-segment display control  
+- `startup_stm32f401xe.s` – (Reference only) Assembly startup file from STM32, not used in Mbed build
 
-1. Connect a USB cable between the USB port on the board and the host computer.
-2. <a name="build_cmd"></a> Run the following command to build the example project and program the microcontroller flash memory:
-    ```bash
-    $ mbed compile -m <TARGET> -t <TOOLCHAIN> --flash
-    ```
-The binary is located at `./BUILD/<TARGET>/<TOOLCHAIN>/mbed-os-example-blinky.bin`.
+---
 
-Alternatively, you can manually copy the binary to the board, which you mount on the host computer over USB.
+## 🧠 How It Works
 
-Depending on the target, you can build the example project with the `GCC_ARM`, `ARM` or `IAR` toolchain. After installing Arm Mbed CLI, run the command below to determine which toolchain supports your target:
+- Uses **Mbed Ticker** for 1-second RTC updates  
+- 7-segment display driven via shift registers (latch, clock, data pins)  
+- Potentiometer value scaled from 0–3.3V  
+- Pushbuttons are active-low with internal pull-ups
 
-```bash
-$ mbed compile -S
-```
+---
 
-## Expected output
-The LED on your target turns on and off every 500 milliseconds.
+## 🔌 Circuit Overview
 
+- **D4**: Latch  
+- **D7**: Clock  
+- **D8**: Data  
+- **A0**: Potentiometer input  
+- **A1 (S1)**: Reset timer  
+- **A3 (S3)**: Voltage display toggle
 
-## Troubleshooting
-If you have problems, you can review the [documentation](https://os.mbed.com/docs/latest/tutorials/debugging.html) for suggestions on what could be wrong and how to fix it.
+---
 
-## Related Links
+## 🚀 Getting Started with Mbed
 
-* [Mbed OS Stats API](https://os.mbed.com/docs/latest/apis/mbed-statistics.html).
-* [Mbed OS Configuration](https://os.mbed.com/docs/latest/reference/configuration.html).
-* [Mbed OS Serial Communication](https://os.mbed.com/docs/latest/tutorials/serial-communication.html).
-* [Mbed OS bare metal](https://os.mbed.com/docs/mbed-os/latest/reference/mbed-os-bare-metal.html).
-* [Mbed boards](https://os.mbed.com/platforms/).
+1. Import this project into the [Mbed Compiler](https://os.mbed.com/compiler).
+2. Select target board: **NUCLEO-F401RE**.
+3. Compile and flash the `.bin` file to your board via USB drag-and-drop.
+4. Open a terminal (e.g., Tera Term) if needed for debug prints (optional).
 
-### License and contributions
+---
 
-The software is provided under Apache-2.0 license. Contributions to this project are accepted under the same license. Please see contributing.md for more info.
+## 📎 Notes
 
-This project contains code from other projects. The original license text is included in those source files. They must comply with our license guide.
+### ✅ About the Startup File
+
+This repository includes a reference startup file:  
+`startup_stm32f401xe.s`  
+
+🛑 **This file is NOT used in the Mbed OS build**. Mbed manages all low-level initialization automatically.  
+The file is provided **for educational purposes only** to show what startup code looks like in bare-metal STM32 development.
+
+---
+
+## 📽️ Demonstration
+
+You can watch a video demonstration of the project in action here:  
+🎥 [Watch the Demo Video](https://your-video-link-here.com)
+
+This video shows the timer display, voltage reading from the potentiometer, and the system’s response to the S1 and S3 buttons.
+
+---
+
+## 📚 License
+
+This project is for academic and educational use.  
+Please credit the author if reused in coursework or documentation.
+
+---
+
+## 👤 Author
+
+**Emmanuel**  
+Ain Shams University – Mechatronics Engineering  
+Spring 2025  
