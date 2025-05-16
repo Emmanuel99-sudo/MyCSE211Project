@@ -79,7 +79,7 @@ The file is provided **for educational purposes only** to show what startup code
 ## 📽️ Demonstration
 
 You can watch a video demonstration of the project in action here:  
-🎥 [Watch the Demo Video](https://your-video-link-here.com)
+🎥 [Watch the Demo Video](https://drive.google.com/file/d/1wE5N_8nHN5ls0sQv8llw8RW_OPCTz89i/view?usp=drivesdk)
 
 This video shows the timer display, voltage reading from the potentiometer, and the system’s response to the S1 and S3 buttons.
 
